@@ -16,6 +16,7 @@
 
 package com.example.jetnews.ui
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,6 +36,7 @@ const val POST_ID = "postId"
 
 @Composable
 fun JetnewsNavGraph(
+    homeListLazyListState: LazyListState,
     appContainer: AppContainer,
     isExpandedScreen: Boolean,
     modifier: Modifier = Modifier,
@@ -64,6 +66,7 @@ fun JetnewsNavGraph(
             )
             HomeRoute(
                 homeViewModel = homeViewModel,
+                homeListLazyListState = homeListLazyListState,
                 isExpandedScreen = isExpandedScreen,
                 openDrawer = openDrawer,
             )

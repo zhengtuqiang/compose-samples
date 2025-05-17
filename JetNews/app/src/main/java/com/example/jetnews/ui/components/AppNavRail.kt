@@ -16,7 +16,10 @@
 
 package com.example.jetnews.ui.components
 
+import android.content.Context
 import android.content.res.Configuration
+import android.widget.Toast
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -29,6 +32,7 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,6 +46,7 @@ fun AppNavRail(
     currentRoute: String,
     navigateToHome: () -> Unit,
     navigateToInterests: () -> Unit,
+    onHeaderClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     NavigationRail(
@@ -49,7 +54,13 @@ fun AppNavRail(
             Icon(
                 painterResource(R.drawable.ic_jetnews_logo),
                 null,
-                Modifier.padding(vertical = 12.dp),
+                Modifier.padding(vertical = 12.dp).combinedClickable(
+                    indication = null,
+                    interactionSource = null,
+                    onClick = {
+                        onHeaderClick()
+                    }
+                ),
                 tint = MaterialTheme.colorScheme.primary
             )
         },

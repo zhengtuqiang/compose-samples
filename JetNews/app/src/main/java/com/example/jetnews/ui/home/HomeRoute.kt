@@ -43,6 +43,7 @@ import com.example.jetnews.ui.home.HomeScreenType.FeedWithArticleDetails
 @Composable
 fun HomeRoute(
     homeViewModel: HomeViewModel,
+    homeListLazyListState: LazyListState,
     isExpandedScreen: Boolean,
     openDrawer: () -> Unit,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
@@ -52,6 +53,7 @@ fun HomeRoute(
 
     HomeRoute(
         uiState = uiState,
+        homeListLazyListState = homeListLazyListState,
         isExpandedScreen = isExpandedScreen,
         onToggleFavorite = { homeViewModel.toggleFavourite(it) },
         onSelectPost = { homeViewModel.selectArticle(it) },
@@ -85,6 +87,7 @@ fun HomeRoute(
 @Composable
 fun HomeRoute(
     uiState: HomeUiState,
+    homeListLazyListState: LazyListState,
     isExpandedScreen: Boolean,
     onToggleFavorite: (String) -> Unit,
     onSelectPost: (String) -> Unit,
@@ -99,7 +102,7 @@ fun HomeRoute(
     // Construct the lazy list states for the list and the details outside of deciding which one to
     // show. This allows the associated state to survive beyond that decision, and therefore
     // we get to preserve the scroll throughout any changes to the content.
-    val homeListLazyListState = rememberLazyListState()
+//    val homeListLazyListState = rememberLazyListState()
     val articleDetailLazyListStates = when (uiState) {
         is HomeUiState.HasPosts -> uiState.postsFeed.allPosts
         is HomeUiState.NoPosts -> emptyList()

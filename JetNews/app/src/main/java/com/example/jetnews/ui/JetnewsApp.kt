@@ -17,6 +17,7 @@
 package com.example.jetnews.ui
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
@@ -55,6 +56,7 @@ fun JetnewsApp(
 
         ModalNavigationDrawer(
             drawerContent = {
+                //侧边抽屉
                 AppDrawer(
                     drawerState = sizeAwareDrawerState,
                     currentRoute = currentRoute,
@@ -67,15 +69,26 @@ fun JetnewsApp(
             // Only enable opening the drawer via gestures if the screen is not expanded
             gesturesEnabled = !isExpandedScreen
         ) {
+            //主内容界面
             Row {
+                //从HomeRoute提升状态到父组件
+                val listState = rememberLazyListState()
+                val scope = rememberCoroutineScope()
+                //如果屏幕是扩展的，则显示AppNavRail
                 if (isExpandedScreen) {
                     AppNavRail(
+                        onHeaderClick = {
+                            scope.launch {
+                                listState.animateScrollToItem(0)
+                            }
+                        },
                         currentRoute = currentRoute,
                         navigateToHome = navigationActions.navigateToHome,
                         navigateToInterests = navigationActions.navigateToInterests,
                     )
                 }
                 JetnewsNavGraph(
+                    homeListLazyListState = listState,
                     appContainer = appContainer,
                     isExpandedScreen = isExpandedScreen,
                     navController = navController,
@@ -90,7 +103,7 @@ fun JetnewsApp(
  * Determine the drawer state to pass to the modal drawer.
  */
 @Composable
-private fun rememberSizeAwareDrawerState(isExpandedScreen: Boolean): DrawerState {
+private fun rememberSizeAwareDrawerState(isExpandedScreen: Boolean): DrawerState {//这个地方的remember用法可以留意一下
     val drawerState = rememberDrawerState(DrawerValue.Closed)
 
     return if (!isExpandedScreen) {
