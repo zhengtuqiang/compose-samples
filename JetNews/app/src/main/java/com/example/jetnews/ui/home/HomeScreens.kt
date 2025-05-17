@@ -139,6 +139,7 @@ fun HomeFeedWithArticleDetailsScreen(
 ) {
     HomeScreenWithList(
         uiState = uiState,
+        homeListLazyListState = homeListLazyListState,
         showTopAppBar = showTopAppBar,
         onRefreshPosts = onRefreshPosts,
         onErrorDismiss = onErrorDismiss,
@@ -243,6 +244,7 @@ fun HomeFeedScreen(
 ) {
     HomeScreenWithList(
         uiState = uiState,
+        homeListLazyListState = homeListLazyListState,
         showTopAppBar = showTopAppBar,
         onRefreshPosts = onRefreshPosts,
         onErrorDismiss = onErrorDismiss,
@@ -278,6 +280,7 @@ fun HomeFeedScreen(
 @Composable
 private fun HomeScreenWithList(
     uiState: HomeUiState,
+    homeListLazyListState: LazyListState,
     showTopAppBar: Boolean,
     onRefreshPosts: () -> Unit,
     onErrorDismiss: (Long) -> Unit,
@@ -292,11 +295,20 @@ private fun HomeScreenWithList(
 ) {
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topAppBarState)
+    val scope: CoroutineScope = rememberCoroutineScope()
     Scaffold(
         snackbarHost = { JetnewsSnackbarHost(hostState = snackbarHostState) },
         topBar = {
             if (showTopAppBar) {
                 HomeTopAppBar(
+                    onTitleClick = {
+                        scope.launch {
+                            homeListLazyListState.animateScrollToItem(
+                                index = 0,
+                                scrollOffset = 0
+                            )
+                        }
+                    },
                     openDrawer = openDrawer,
                     topAppBarState = topAppBarState
                 )
@@ -690,6 +702,7 @@ private fun PostTopBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeTopAppBar(
+    onTitleClick: () -> Unit = {},
     openDrawer: () -> Unit,
     modifier: Modifier = Modifier,
     topAppBarState: TopAppBarState = rememberTopAppBarState(),
@@ -705,7 +718,16 @@ private fun HomeTopAppBar(
                 contentDescription = title,
                 contentScale = ContentScale.Inside,
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .combinedClickable(
+                        indication = null,
+                        interactionSource = null,
+                        onClick = {
+                            Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show()
+                            onTitleClick()
+                        }
+                    )
             )
         },
         navigationIcon = {
