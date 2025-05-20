@@ -16,11 +16,14 @@
 
 package com.example.jetnews.ui.home
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
@@ -113,6 +116,10 @@ fun HomeRoute(
     }
 
     val homeScreenType = getHomeScreenType(isExpandedScreen, uiState)
+    Log.d("ztqmy", "HomeRoute: $homeScreenType")
+    LaunchedEffect(uiState) {
+        Log.d("ztqmy", "HomeRoute-LaunchedEffect: $homeScreenType")
+    }
     when (homeScreenType) {
         HomeScreenType.FeedWithArticleDetails -> {
             HomeFeedWithArticleDetailsScreen(

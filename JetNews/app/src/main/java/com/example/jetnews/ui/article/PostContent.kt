@@ -95,7 +95,7 @@ fun PostContent(
         postContentItems(post)
     }
 }
-
+//注意这是一个拓展函数
 fun LazyListScope.postContentItems(post: Post) {
     item {
         PostHeaderImage(post)

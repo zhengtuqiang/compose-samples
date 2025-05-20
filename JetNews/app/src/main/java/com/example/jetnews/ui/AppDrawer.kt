@@ -74,7 +74,7 @@ fun AppDrawer(
         )
     }
 }
-
+@Preview
 @Composable
 private fun JetNewsLogo(modifier: Modifier = Modifier) {
     Row(modifier = modifier) {

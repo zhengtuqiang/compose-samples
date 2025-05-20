@@ -61,7 +61,7 @@ fun JetnewsNavGraph(
             val homeViewModel: HomeViewModel = viewModel(
                 factory = HomeViewModel.provideFactory(
                     postsRepository = appContainer.postsRepository,
-                    preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
+                    preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)//参数如何传递与获取的
                 )
             )
             HomeRoute(

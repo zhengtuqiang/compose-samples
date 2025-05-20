@@ -27,6 +27,7 @@ import com.example.jetnews.model.Post
 import com.example.jetnews.model.PostAuthor
 import com.example.jetnews.model.PostsFeed
 import com.example.jetnews.model.Publication
+import generatedFakePosts
 
 /**
  * Define hardcoded posts to avoid handling any non-ui operations.
@@ -1180,9 +1181,11 @@ val post6 = Post(
     imageThumbId = R.drawable.post_6_thumb
 )
 
+val fakeRecentPosts = generatedFakePosts.take(555)
+
 val posts: PostsFeed =
     PostsFeed(
-        highlightedPost = post6,
+        highlightedPost = post1,
         recommendedPosts = listOf(post1, post2, post3),
         popularPosts = listOf(
             post5,
@@ -1193,6 +1196,6 @@ val posts: PostsFeed =
             post6,
             post3.copy(id = "post8"),
             post4.copy(id = "post9"),
-            post5.copy(id = "post10")
-        )
+            post5.copy(id = "post10"),
+        ) + fakeRecentPosts
     )

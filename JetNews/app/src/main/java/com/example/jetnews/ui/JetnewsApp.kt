@@ -50,7 +50,7 @@ fun JetnewsApp(
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute =
             navBackStackEntry?.destination?.route ?: JetnewsDestinations.HOME_ROUTE
-
+        //这个参数可以用来判断是否是扩展屏幕或者平板
         val isExpandedScreen = widthSizeClass == WindowWidthSizeClass.Expanded
         val sizeAwareDrawerState = rememberSizeAwareDrawerState(isExpandedScreen)
 

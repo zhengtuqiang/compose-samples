@@ -54,7 +54,7 @@ class FakePostsRepository : PostsRepository {
 
     override suspend fun getPostsFeed(): Result<PostsFeed> {
         return withContext(Dispatchers.IO) {
-            delay(800) // pretend we're on a slow network
+            delay(8000) // pretend we're on a slow network
             if (shouldRandomlyFail()) {
                 Result.Error(IllegalStateException())
             } else {
@@ -64,6 +64,7 @@ class FakePostsRepository : PostsRepository {
         }
     }
 
+    //用于桌面widget
     override fun observeFavorites(): Flow<Set<String>> = favorites
     override fun observePostsFeed(): Flow<PostsFeed?> = postsFeed
 
@@ -80,7 +81,7 @@ class FakePostsRepository : PostsRepository {
     /**
      * Randomly fail some loads to simulate a real network.
      *
-     * This will fail deterministically every 5 requests
+     * This will fail deterministically every 3 requests
      */
-    private fun shouldRandomlyFail(): Boolean = ++requestCount % 5 == 0
+    private fun shouldRandomlyFail(): Boolean = ++requestCount % 3 == 0
 }

@@ -458,40 +458,42 @@ private fun PostList(
     searchInput: String = "",
     onSearchInputChanged: (String) -> Unit,
 ) {
-    LazyColumn(
-        modifier = modifier,
-        contentPadding = contentPadding,
-        state = state
-    ) {
-        if (showExpandedSearch) {
-            item {
-                HomeSearch(
-                    Modifier.padding(horizontal = 16.dp),
-                    searchInput = searchInput,
-                    onSearchInputChanged = onSearchInputChanged,
-                )
+    Box {
+        LazyColumn(
+            modifier = modifier,
+            contentPadding = contentPadding,
+            state = state
+        ) {
+            if (showExpandedSearch) {
+                item {
+                    HomeSearch(
+                        Modifier.padding(horizontal = 16.dp),
+                        searchInput = searchInput,
+                        onSearchInputChanged = onSearchInputChanged,
+                    )
+                }
             }
-        }
-        item { PostListTopSection(postsFeed.highlightedPost, onArticleTapped) }
-        if (postsFeed.recommendedPosts.isNotEmpty()) {
-            item {
-                PostListSimpleSection(
-                    postsFeed.recommendedPosts,
-                    onArticleTapped,
-                    favorites,
-                    onToggleFavorite
-                )
+            item { PostListTopSection(postsFeed.highlightedPost, onArticleTapped) }
+            if (postsFeed.recommendedPosts.isNotEmpty()) {
+                item {
+                    PostListSimpleSection(
+                        postsFeed.recommendedPosts,
+                        onArticleTapped,
+                        favorites,
+                        onToggleFavorite
+                    )
+                }
             }
-        }
-        if (postsFeed.popularPosts.isNotEmpty() && !showExpandedSearch) {
-            item {
-                PostListPopularSection(
-                    postsFeed.popularPosts, onArticleTapped
-                )
+            if (postsFeed.popularPosts.isNotEmpty() && !showExpandedSearch) {
+                item {
+                    PostListPopularSection(
+                        postsFeed.popularPosts, onArticleTapped
+                    )
+                }
             }
-        }
-        if (postsFeed.recentPosts.isNotEmpty()) {
-            item { PostListHistorySection(postsFeed.recentPosts, onArticleTapped) }
+            if (postsFeed.recentPosts.isNotEmpty()) {
+                item { PostListHistorySection(postsFeed.recentPosts, onArticleTapped) }
+            }
         }
     }
 }
@@ -780,7 +782,7 @@ fun PreviewHomeListDrawerScreen() {
                 errorMessages = emptyList(),
                 searchInput = ""
             ),
-            showTopAppBar = false,
+            showTopAppBar = true,
             onToggleFavorite = {},
             onSelectPost = {},
             onRefreshPosts = {},

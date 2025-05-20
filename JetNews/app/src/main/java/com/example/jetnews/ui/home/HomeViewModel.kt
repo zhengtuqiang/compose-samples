@@ -16,6 +16,7 @@
 
 package com.example.jetnews.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -133,7 +134,11 @@ class HomeViewModel(
 
     // UI state exposed to the UI
     val uiState = viewModelState
-        .map(HomeViewModelState::toUiState)
+//        .map(HomeViewModelState::toUiState)
+        .map({
+            Log.d("ztqmy", "HomeViewModelState->HomeUiState: 转换")
+            it.toUiState()//跟上面的HomeViewModelState::toUiState调用是等价的
+        })
         .stateIn(
             viewModelScope,
             SharingStarted.Eagerly,
@@ -216,6 +221,7 @@ class HomeViewModel(
      */
     fun interactedWithArticleDetails(postId: String) {
         viewModelState.update {
+            Log.d("ztqmy", "interactedWithArticleDetails: 更新HomeViewModelState")
             it.copy(
                 selectedPostId = postId,
                 isArticleOpen = true
